@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  section.form
+    form(action='/')
+      input(type='text',
+            name='long_url',
+            class='url_input'
+            label='URL to Shorten')
+      br
+      input(type='submit',
+            name='submit',
+            text='Shorten'
+            class='button')
