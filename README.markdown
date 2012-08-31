@@ -4,9 +4,10 @@
 
 This thing is far from done.
 
-*   The HTML form needs to be finished being moved to Jade.
-*   CSS needs to be moved out of the HTML and into CSS files
+*   Actually shortening needs to be implemented
 *   Needs a data backend
+*   The HTML form needs to be finished being moved to Jade
+*   CSS needs to be moved out of the HTML and into CSS files
 
 ## About
 
