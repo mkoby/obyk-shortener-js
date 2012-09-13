@@ -4,8 +4,13 @@
  */
 
 var express = require('express')
+  , mongoose = require('mongoose')
+  , Schema = mongoose.Schema
+  , ObjectId = Schema.ObjectId
+  , db = mongoose.connect('mongodb://localhost/obyk')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , short_links = require('./models/short_link')
   , http = require('http')
   , path = require('path');
 
@@ -27,6 +32,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// Database Stuff
+//module.exports = db.model('short_link', ShortLink);
 app.get('/', routes.index);
 app.get('/users', user.list);
 
