@@ -21,10 +21,12 @@ module.exports = function(app, auth){
 
     ShortLink.findOne({ url_hash: full_link_hash }, function(err, shortLink){
       if(err) { console.log("Something went wrong looking for short link with url_hash"); return; }
-      if(!shortLink) {
+      var short_link = shortLink;
+
+      if(!short_link) {
         var dt = new Date();
         var full_link_dt = req_full_link + dt.toString();
-        var short_link = new ShortLink({
+        short_link = new ShortLink({
           full_link : req_full_link,
           url_hash : require('crypto').createHash('sha1').update(req_full_link).digest('hex'),
           short_code : require('crypto').createHash('sha1').update(full_link_dt).digest('hex').toString().substring(0,5),
@@ -40,6 +42,7 @@ module.exports = function(app, auth){
         });
       }
 
+      console.log(short_link);
       console.log("We send the full url back to show on the page");
     });
   });
