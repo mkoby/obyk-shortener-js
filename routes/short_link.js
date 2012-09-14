@@ -19,32 +19,28 @@ module.exports = function(app, auth){
     var req_full_link = req.body.short_link.full_link;
     var full_link_hash = require('crypto').createHash('sha1').update(req_full_link).digest('hex');
 
-    var short_link = ShortLink.findOne({ url_hash: full_link_hash }, function(err, shortLink){
+    ShortLink.findOne({ url_hash: full_link_hash }, function(err, shortLink){
       if(err) { console.log("Something went wrong looking for short link with url_hash"); return; }
-      if(shortLink) {
-        console.log("We found the short link matching url hash of %s", full_link_hash.toString());
-        short_link = shortLink;
+      if(!shortLink) {
+        var dt = new Date();
+        var full_link_dt = req_full_link + dt.toString();
+        var short_link = new ShortLink({
+          full_link : req_full_link,
+          url_hash : require('crypto').createHash('sha1').update(req_full_link).digest('hex'),
+          short_code : require('crypto').createHash('sha1').update(full_link_dt).digest('hex').toString().substring(0,5),
+          created_at : new Date()
+        });
+
+        short_link.save(function(err){
+          if(err) {
+            console.log("Something went wrong while saving new short_link object");
+          } else {
+            console.log("Short Link saved!");
+          }
+        });
       }
+
+      console.log("We send the full url back to show on the page");
     });
-
-    var dt = new Date();
-    var full_link_dt = req_full_link + dt.toString();
-
-    if(!short_link) {
-      short_link = new ShortLink({
-        full_link : req_full_link,
-        url_hash : require('crypto').createHash('sha1').update(req_full_link).digest('hex'),
-        short_code : require('crypto').createHash('sha1').update(full_link_dt).digest('hex').toString().substring(0,5),
-        created_at : new Date()
-      });
-
-      short_link.save(function(err){
-        if(err) {
-          console.log("Something went wrong while saving new short_link object");
-        } else {
-          console.log("Short Link saved!");
-        }
-      });     
-    }
   });
 }
