@@ -2,7 +2,7 @@ extends layout
 
 block content
   section.short-link-form(style="padding-top: 55px; margin-left:auto; margin-right:auto; text-align:center;")
-    |<form accept-charset="UTF-8" action="/short_link/create" class="new_short_link" data-remote="true" id="new_short_link" method="post">
+    |<form accept-charset="UTF-8" action="/short_links" class="new_short_link" data-remote="true" id="new_short_link" method="post">
     |  <input id="short_link_full_link" name="short_link[full_link]" size="30" style="height:30px; width: 640px; font-size: 25px;" type="text" /><br />
     |  <p><input name="commit" style="height: 45px; background-color: #9B9B9B; color: #FCFCFC; font-size: 20px; font-weight: bold;" type="submit" value="Shorten" /></p><br />
     |</form>
